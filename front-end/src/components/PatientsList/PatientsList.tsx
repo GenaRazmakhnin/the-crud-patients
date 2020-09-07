@@ -7,10 +7,10 @@ import PatientsTable from './PatientsTable'
 import PatientsHeader from './PatientsHeader'
 import PatientsFooter from './PatientsFooter'
 
-import PatientManageForm from '../../components/PatientManageForm'
-import PatientDeleteForm from '../../components/PatientDelete'
+import PatientManageForm from '../PatientManageForm'
+import PatientDeleteForm from '../PatientDelete'
 
-import Modal from '../../components/Modal'
+import Modal from '../Modal'
 
 
 const PatientsList: React.FC = () => {

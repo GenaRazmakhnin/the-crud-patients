@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { sagaGetUsers } from '../../store/user/actions'
-import PatientsList from '../../components/patients-list'
+import PatientsList from '../../components/PatientsList'
 import style from './patient-list-page.module.scss'
 
 const PatientsPage: React.FC = () => {
