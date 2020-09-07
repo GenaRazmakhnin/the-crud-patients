@@ -1,12 +1,19 @@
 .DS_Store
+
+dist
 node_modules
+front-end/node_modules
+back-end/node_modules
 
-packages/**/package-lock.json
-packages/**/yarn.lock
+front-end/package-lock.json
+back-end/package-lock.json
 
-packages/**/dist
-package-lock.json
 yarn.lock
+front-end/yarn.lock
+back-end/yarn.lock
+
+front-end/build
+back-end/build
 
 # local env files
 .env.local
