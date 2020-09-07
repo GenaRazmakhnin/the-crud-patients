@@ -1,0 +1,14 @@
+.container {
+  padding: 24px;
+  width: 450px;
+}
+
+.bottom-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin: 40px -8px 0;
+
+  button {
+    margin: 0 8px;
+  }
+}

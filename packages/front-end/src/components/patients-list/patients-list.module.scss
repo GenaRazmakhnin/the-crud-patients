@@ -1,0 +1,23 @@
+.header-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.title-container {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.row-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 -4px;
+}
+
+.single-action {
+  display: block;
+  margin: 0 4px;
+}
