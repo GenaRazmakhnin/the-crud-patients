@@ -1,1 +1,0 @@
-web: yarn --cwd back-end build && yarn --cwd front-end build && node commands.js && node back-end/build/back-end/src/index.js

@@ -1,18 +1,14 @@
+version: 2
 jobs:
-  deploy:
-    executor: heroku/default
+  build:
+    docker:
+      - image: circleci/node:12
+
+    working_directory: ~/repo
+
     steps:
       - checkout
-      - heroku/install
-      - run:
-          command: >
-            echo "The command above installs Heroku, the command below deploys.
-            What you do inbetween is up to you!"
-      - heroku/deploy-via-git
-orbs:
-  heroku: circleci/heroku@x.y
-version: 2.1
-workflows:
-  heroku_deploy:
-    jobs:
-      - deploy
+
+      - run: yarn --cwd front-end install
+
+      - run: yarn --cwd front-end test
