@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "nodemon --watch src --exec ts-node src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +27,16 @@
     "@types/node": "^12.0.0",
     "ts-node": "^9.0.0",
     "rimraf": "^3.0.2",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.2",
+    "jest": "^26.4.2",
+    "@types/jest": "^26.0.13",
+    "ts-jest": "^26.3.0"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": ["ts", "tsx", "js"]
   }
 }

@@ -16,13 +16,13 @@ const addressFields = ['region', 'city', 'street', 'house']
 
 export function paginationGuard(pagination: any): Pagination {
   const { limit, page, search } = pagination
-  const guardedLimit = Number(limit) || 20
+  const guardedLimit = Number(limit) || 10
   const guardedPage = Number(page) || 1
   const guardedSearch = search ? String(search) : ''
 
   return {
     search: guardedSearch,
-    limit: guardedLimit > 20 ? 20 : guardedLimit,
+    limit: guardedLimit > 10 ? 10 : guardedLimit,
     page: guardedPage
   }
 }
@@ -46,7 +46,7 @@ export function createPatientGuard(patient: any): Data | Exception {
 
   patient.number = patient.number.replace(/\D+/g, '')
 
-  if (patient.number.length < 16) {
+  if (patient.number.length !== 16) {
     return { error: {
       message: 'Мы не можем создать пациента',
       validation: { name: 'number', message: 'Укажите номер из 16 цифр' }
@@ -79,6 +79,8 @@ export function updatePatientGuard(patient: any): Data | Exception {
 
       return { ...data, [field]: patient[field] }
     }
+
+    return data
   }, {})
 
   return { data: recollectedForm }
