@@ -1,8 +1,8 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects'
 import { SagaGetUsers, SagaCreateUser, SagaUpdateUser, SagaDeleteUser } from '../../types/user'
-import api from '../../api'
+import apiInstance from '../../api'
 
-function* getUsers({ payload }: SagaGetUsers) {
+export function* getUsers({ payload }: SagaGetUsers, api:any = apiInstance) {
   const { pagination } = payload
 
   const query = [
@@ -14,7 +14,7 @@ function* getUsers({ payload }: SagaGetUsers) {
   yield put({ type: 'SET_USERS', payload: { pagination } })
 
   const { data, pagination: incomingPagination } = yield call(
-    () => api.get(`/patients?${query.filter(i => i).join('&')}`)
+    api.get, `/patients?${query.filter(i => i).join('&')}`
   )
 
   yield put({ type: 'SET_USERS', payload: {
@@ -29,16 +29,12 @@ function* getUsersWatcher() {
 
 
 
-function* postUser({ payload }: SagaCreateUser) {
+function* postUser({ payload }: SagaCreateUser, api:any = apiInstance) {
   const { form, callback } = payload
 
-  yield put({ type: 'POST_USER_STATUS', payload: { loading: true } })
-
-  yield call((form) => api.post('/patients', form), form)
+  yield call(api.post, '/patients', form)
 
   callback.resolve()
-  
-  yield put({ type: 'POST_USER_STATUS', payload: { loading: false } })
 }
 
 function* postUserWatcher() {
@@ -47,10 +43,10 @@ function* postUserWatcher() {
 
 
 
-function* putUser({ payload }: SagaUpdateUser) {
+function* putUser({ payload }: SagaUpdateUser, api:any = apiInstance) {
   const { form, id, callback } = payload
 
-  yield call((form) => api.patch(`/patients/${id}`, form), form)
+  yield call(api.patch, `/patients/${id}`, form)
   
   callback.resolve()
 }
@@ -61,10 +57,10 @@ function* putUserWatcher() {
 
 
 
-function* deleteUser({ payload }: SagaDeleteUser) {
+function* deleteUser({ payload }: SagaDeleteUser, api:any = apiInstance) {
   const { id, callback } = payload
 
-  yield call(() => api.del(`/patients/${id}`))
+  yield call(api.del, `/patients/${id}`)
 
   callback.resolve()
 }

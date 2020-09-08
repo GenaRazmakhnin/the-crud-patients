@@ -69,6 +69,8 @@ const PatientsList: React.FC = () => {
     }
   }, [])
 
+
+
   const updatePage = useCallback((page: number) => {
     dispatch(sagaGetUsers({ ...pagination, page: page + 1 }))
   }, [])

@@ -10,17 +10,17 @@ const returnFields = [
 export async function getPatientsList(rawPagination: any) {
   const { search, limit, page }: Pagination = paginationGuard(rawPagination)
 
-  const orderString = ' ORDER BY id DESC'
-  const limitString = ` LIMIT ${limit}`
-  const searchString = search ? ` lastname LIKE '%' || '${search}' || '%' AND` : ''
-  const offsetString = ` OFFSET ${limit*(page - 1)}`
-
-  console.log(`SELECT ${returnFields} FROM patients WHERE${searchString} deleted = false${orderString}${offsetString}${limitString};`)
+  const orderString = 'ORDER BY id DESC'
+  const limitString = `LIMIT ${limit}`
+  const searchByNumber = search ? `(number LIKE '%' || '${search}' || '%')` : ''
+  const searchByLastname = search ? `(LOWER(lastname) LIKE '%' || LOWER('${search}') || '%')` : ''
+  const searchString = [searchByNumber, searchByLastname].filter(i => i).join(' OR ')
+  const offsetString = `OFFSET ${limit*(page - 1)}`
 
   const { data: [, data, count] } = await query({
     text: `BEGIN;
-           SELECT ${returnFields} FROM patients WHERE${searchString} deleted = false${orderString}${offsetString}${limitString};
-           SELECT COUNT(id) AS total FROM patients WHERE deleted = false;
+           SELECT ${returnFields} FROM patients WHERE ${searchString ? `(${searchString}) AND` : ''} deleted = false ${orderString} ${offsetString} ${limitString};
+           SELECT COUNT(id) AS total FROM patients WHERE ${searchString ? `(${searchString}) AND` : ''} deleted = false;
            END;`
   })
 
@@ -50,11 +50,10 @@ export async function createPatient(rawPatient: any) {
 export async function updatePatient(id: number, params: any) {
   const { data } = updatePatientGuard(params)
 
-  // console.log(data)
   const fields = Object.keys(data)
   const mappedFields = fields.map(field => `${field}='${data[field]}'`)
 
-  const { data: bdResponse} = await query({
+  const { data: bdResponse } = await query({
     text: `UPDATE patients SET ${mappedFields} WHERE id=${Number(id) || null} RETURNING ${returnFields}`
   })
   

@@ -8,11 +8,10 @@ interface Props {
 }
 
 const PatientsFooter: React.FC<Props> = ({ total, page, pageChange }) => {
-  console.log('rendering footer')
   return (
     <TablePagination
       component="div"
-      count={total}
+      count={total || 0}
       rowsPerPage={10}
       rowsPerPageOptions={[]}
       page={page}

@@ -11,7 +11,7 @@ export async function createPatientHandler(request: Request, response: Response)
   const { error, data } = await createPatient(request.body)
 
   if (error) {
-    response.status(401).json(error)
+    response.status(400).json(error)
     return
   }
 

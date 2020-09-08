@@ -9,8 +9,6 @@ const PatientsPage: React.FC = () => {
 
   dispatch(sagaGetUsers({ limit: 10, page: 1 }))
 
-  console.log('render page')
-
   return (
     <div className={style['container']}>
       <div className={style['patients-table']}>

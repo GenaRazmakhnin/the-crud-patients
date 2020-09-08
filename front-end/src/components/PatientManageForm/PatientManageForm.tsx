@@ -14,7 +14,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
-import style from './create-patient-form.module.scss'
+import style from './patient-manage-form.module.scss'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import BaseAutocomplite from '../base/base-autocomplite'
@@ -99,7 +99,7 @@ const RegistrationForm: React.FC<Props> = ({ patient, onClose }) => {
   const [loading, changeLoadingStatus] = useState(false)
   const { id, defaultFields } = getDefaultFields(patient)
 
-  const form = useFormik({
+  const formik = useFormik({
     initialValues: defaultFields,
     validate,
     onSubmit: async form => {
@@ -110,7 +110,7 @@ const RegistrationForm: React.FC<Props> = ({ patient, onClose }) => {
           ? dispatch(sagaUpdateUser(id, form, { resolve, reject }))
           : dispatch(sagaCreateUser(form, { resolve, reject }))
       })
-      
+
       changeLoadingStatus(false)
       onClose(true)
     }
@@ -119,7 +119,7 @@ const RegistrationForm: React.FC<Props> = ({ patient, onClose }) => {
   const {
     errors, values, touched,
     submitForm, setFieldValue, handleChange, handleBlur
-  } = form
+  } = formik
 
   const addresses = useSelector(
     (store: RootState) => store.address.list,
@@ -152,8 +152,6 @@ const RegistrationForm: React.FC<Props> = ({ patient, onClose }) => {
   const getError = (key: keyof FormFields) => {
     return touched[key] && errors[key] || ''
   }
-
-  console.log('render create form')
 
   return (
     <form className={style['container']} onSubmit={onSubmitHandler}>

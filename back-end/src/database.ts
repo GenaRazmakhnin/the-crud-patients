@@ -6,7 +6,7 @@ const base = new Client({
   port: 5432,
   user: 'backend_user',
   password: '1234',
-  database: 'patients2'
+  database: 'patients'
 })
 
 export function query(select: any) {

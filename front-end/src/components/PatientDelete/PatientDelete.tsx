@@ -30,8 +30,6 @@ const PatientDelete: React.FC<Props> = ({ onClose, patient }) => {
     onClose(true)
   }
 
-  console.log('render delete form')
-
   return (
     <div className={style['container']}>
       Вы уверены, что хотите удалить данные о пациенте:<br/>
